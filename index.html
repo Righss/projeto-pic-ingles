@@ -8,15 +8,40 @@
     registerAframeClickDragComponent(window.AFRAME);
   </script>
   
+  
+  <script>
+AFRAME.registerComponent('for_a_marker', {
+    init: function () {
+        var text = document.querySelector('#casaa');
+        text.addEventListener("click", function (evt) { //or you could do "mouseenter" [event](https://aframe.io/docs/0.9.0/components/cursor.html#events)
+            alert("do your stuff");
+        });
+    }
+});
+</script>
+  
+  
+  
   <body style="margin : 0px; overflow: hidden;">
-    <a-scene embedded arjs renderer="logarithmicDepthBuffer: true;">
+    <a-scene embedded renderer="logarithmicDepthBuffer: true;" arjs="detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceType: webcam" cursor="rayOrigin: mouse">
+      
+      <a-entity cursor="rayOrigin: mouse" raycaster="objects: .intersectable; useWorldCoordinates: true;"></a-entity>
+      
       <a-assets>
         <a-asset-item id="casa" src="https://cdn.glitch.global/482bb855-3373-4ff9-b060-ca967b7022b9/casa1.gltf?v=1664563148584"></a-asset-item> 
        </a-assets>
       
+      
       <a-marker preset="hiro">
         
          <a-entity gltf-model="#casa" scale="0.1 0.1 0.1"></a-entity>
+                
+      </a-marker>
+      
+      <a-marker type="barcode" value="17" emitevents="true" for_a_marker>
+        
+         <a-entity gltf-model="#casa" id= "casaa" scale="0.1 0.1 0.1" class="intersectable">
+        </a-entity>
                 
       </a-marker>
       <a-entity camera>
