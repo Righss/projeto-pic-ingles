@@ -1,0 +1,122 @@
+{
+    "asset": {
+        "version": "2.0",
+        "generator": "Open Asset Import Library (assimp v5.0.0)"
+    },
+    "accessors": [
+        {
+            "bufferView": 0,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 9183,
+            "type": "VEC3",
+            "max": [
+                0.29214000701904299,
+                -0.9943665266036987,
+                0.29213759303092959
+            ],
+            "min": [
+                -0.29216161370277407,
+                -1.146156907081604,
+                -0.29221484065055849
+            ]
+        },
+        {
+            "bufferView": 1,
+            "byteOffset": 0,
+            "componentType": 5125,
+            "count": 55122,
+            "type": "SCALAR",
+            "max": [
+                4720.0
+            ],
+            "min": [
+                0.0
+            ]
+        }
+    ],
+    "buffers": [
+        {
+            "byteLength": 330684,
+            "uri": "ring.bin"
+        }
+    ],
+    "bufferViews": [
+        {
+            "buffer": 0,
+            "byteOffset": 0,
+            "byteLength": 110196,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 110196,
+            "byteLength": 220488,
+            "target": 34963
+        }
+    ],
+    "materials": [
+        {
+            "name": "Metallic",
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [
+                    0.7991028428077698,
+                    0.4507858455181122,
+                    0.3564002513885498,
+                    1.0
+                ],
+                "roughnessFactor": 0.25
+            }
+        },
+        {
+            "name": "material"
+        }
+    ],
+    "meshes": [
+        {
+            "name": "meshes_0",
+            "primitives": [
+                {
+                    "mode": 4,
+                    "material": 0,
+                    "indices": 1,
+                    "attributes": {
+                        "POSITION": 0
+                    }
+                }
+            ]
+        }
+    ],
+    "nodes": [
+        {
+            "name": "nodes_0",
+            "matrix": [
+                0.03937007486820221,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                -4.693278654599453e-9,
+                -0.03937007114291191,
+                0.0,
+                0.0,
+                0.03937007114291191,
+                -4.693278654599453e-9,
+                0.0,
+                0.0,
+                0.011502520181238652,
+                -1.3712073698712857e-9,
+                1.0
+            ],
+            "mesh": 0
+        }
+    ],
+    "scenes": [
+        {
+            "nodes": [
+                0
+            ]
+        }
+    ],
+    "scene": 0
+}

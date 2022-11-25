@@ -1,51 +1,137 @@
 <!DOCTYPE html>
 <html>
-  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  </head>
   <!-- we import arjs version without NFT but with marker + location based support -->
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
   <script>
     registerAframeClickDragComponent(window.AFRAME);
   </script>
-  
-  
+
   <script>
-AFRAME.registerComponent('for_a_marker', {
-    init: function () {
-        var text = document.querySelector('#casaa');
-        text.addEventListener("click", function (evt) { //or you could do "mouseenter" [event](https://aframe.io/docs/0.9.0/components/cursor.html#events)
-            alert("do your stuff");
+    AFRAME.registerComponent("for_a_marker", {
+      init: function () {
+        var text = document.querySelector("#casaa");
+        text.addEventListener("click", function (evt) {
+          //or you could do "mouseenter" [event](https://aframe.io/docs/0.9.0/components/cursor.html#events)
+          alert("do your stuff");
         });
-    }
-});
-</script>
-  
-  
-  
-  <body style="margin : 0px; overflow: hidden;">
-    <a-scene embedded renderer="logarithmicDepthBuffer: true;" arjs="detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceType: webcam" cursor="rayOrigin: mouse">
-      
-      <a-entity cursor="rayOrigin: mouse" raycaster="objects: .intersectable; useWorldCoordinates: true;"></a-entity>
-      
+      },
+    });
+  </script>
+
+  <body style="margin: 0px; overflow: hidden">
+    <!-- OBS: logarithmicDepthBuffer precisa ser falso para que os textos sejam exibidos em frente aos models -->
+    <a-scene
+      embedded
+      renderer="logarithmicDepthBuffer: false;"
+      arjs="detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceType: webcam"
+      cursor="rayOrigin: mouse"
+    >
+      <!-- Assets -->
       <a-assets>
-        <a-asset-item id="casa" src="https://cdn.glitch.global/482bb855-3373-4ff9-b060-ca967b7022b9/casa1.gltf?v=1664563148584"></a-asset-item> 
-       </a-assets>
-      
-      
-      <a-marker preset="hiro">
-        
-         <a-entity gltf-model="#casa" scale="0.1 0.1 0.1"></a-entity>
-                
-      </a-marker>
-      
-      <a-marker type="barcode" value="17" emitevents="true" for_a_marker>
-        
-         <a-entity gltf-model="#casa" id= "casaa" scale="0.1 0.1 0.1" class="intersectable">
-        </a-entity>
-                
-      </a-marker>
-      <a-entity camera>
+        <a-asset-item
+          id="casa"
+          src="https://cdn.glitch.global/482bb855-3373-4ff9-b060-ca967b7022b9/casa1.gltf?v=1664563148584"
+        ></a-asset-item>
+        <a-asset-item id="chair" src="./assets/chair.gltf"></a-asset-item>
+        <a-asset-item id="burguer" src="./assets/burger.gltf"></a-asset-item>
+      </a-assets>
+
+      <a-entity
+        cursor="rayOrigin: mouse"
+        raycaster="objects: .intersectable; useWorldCoordinates: true;"
+      >
       </a-entity>
+
+      <!-- Quando o QRCode é escaneado -->
+      <a-marker type="barcode" value="17" emitevents="true" for_a_marker>
+        <a-text
+          value="Qual o nome desse objeto em ingles?"
+          rotation="270 0 0"
+          position="-1.7 0 -1"
+          color="#d2c911"
+        ></a-text>
+
+        <!-- <a-entity
+          gltf-model="#chair"
+          id="casa"
+          rotation="270 0 0"
+          position="0 0 0.5"
+          scale="1.2 1.2 1.2"
+          class="intersectable"
+        >
+        </a-entity> -->
+
+        <a-entity
+          gltf-model="#burguer"
+          id="casa"
+          rotation="270 0 0"
+          position="0 0 0.5"
+          scale="0.5 0.5 0.5"
+          class="intersectable"
+        >
+        </a-entity>
+
+        <!-- Opção 1 -->
+        <!-- heigh=largura depth=altura width=espessura -->
+        <a-box
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="-1.5 0 1.2"
+        >
+          <a-entity
+            text="value: snack; color: #d2c911; align: center; text-shadow: -1px 0 black"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.08 0 0"
+          ></a-entity>
+        </a-box>
+
+        <!-- Opção 2 -->
+        <!-- heigh=largura depth=altura width=espessura -->
+        <a-box
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="0 0 1.2"
+        >
+          <a-entity
+            text="value: lunch; color: #d2c911; align: center;"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.08 0 0"
+          ></a-entity
+        ></a-box>
+
+        <!-- Opção 3 -->
+        <!-- heigh=largura depth=altura width=espessura -->
+        <a-box
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="1.5 0 1.2"
+        >
+          <a-entity
+            text="value: burguer; color: #d2c911; align: center;"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.08 0 0"
+          ></a-entity
+        ></a-box>
+      </a-marker>
+
+      <a-entity camera> </a-entity>
     </a-scene>
   </body>
 </html>
