@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
   </head>
   <!-- we import arjs version without NFT but with marker + location based support -->
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
@@ -12,63 +12,83 @@
   </script>
 
   <script>
+    // AÇÃO DE TOUCH NAS ALTERNATIVAS
     AFRAME.registerComponent("for_a_marker", {
       init: function () {
-        var text = document.querySelector("#casaa");
-        text.addEventListener("click", function (evt) {
-          //or you could do "mouseenter" [event](https://aframe.io/docs/0.9.0/components/cursor.html#events)
-          alert("do your stuff");
+        var btnOpcaoList = document.querySelectorAll(".btn-opcao");
+        btnOpcaoList.forEach((btnOpcao) => {
+          btnOpcao.addEventListener("click", function (evt) {
+            var idBox = btnOpcao.getAttribute("box_id");
+            var certo =
+              btnOpcao.getAttribute("natureza") == "certo" ? true : false;
+            var boxOpcao = document.querySelector("#" + idBox);
+            boxOpcao.setAttribute("color", certo ? "green" : "red");
+          });
         });
       },
     });
   </script>
 
   <body style="margin: 0px; overflow: hidden">
-    <!-- OBS: logarithmicDepthBuffer precisa ser falso para que os textos sejam exibidos em frente aos models -->
+    <!-- CENA -->
     <a-scene
       embedded
       renderer="logarithmicDepthBuffer: false;"
       arjs="detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceType: webcam"
       cursor="rayOrigin: mouse"
     >
-      <!-- Assets -->
+      <!-- OBS: logarithmicDepthBuffer precisa ser falso para que os textos sejam exibidos em frente aos models -->
+
+      <!-- RECURSOS (cdn do Glitch) -->
       <a-assets>
         <a-asset-item
-          id="casa"
-          src="https://cdn.glitch.global/482bb855-3373-4ff9-b060-ca967b7022b9/casa1.gltf?v=1664563148584"
+          id="res-burguer"
+          src="https://cdn.glitch.global/482bb855-3373-4ff9-b060-ca967b7022b9/burger.gltf?v=1669590378348"
         ></a-asset-item>
-        <a-asset-item id="chair" src="./assets/chair.gltf"></a-asset-item>
-        <a-asset-item id="burguer" src="./assets/burger.gltf"></a-asset-item>
+        <a-asset-item
+          id="res-oculos-sol"
+          src="https://cdn.glitch.global/482bb855-3373-4ff9-b060-ca967b7022b9/ocolusSol.gltf?v=1669595755330"
+        >
+        </a-asset-item>
+        <a-asset-item
+          id="res-privada"
+          src="https://cdn.glitch.global/482bb855-3373-4ff9-b060-ca967b7022b9/toilet.gltf?v=1669595790590"
+        >
+        </a-asset-item>
+        <a-asset-item
+          id="res-morango"
+          src="https://cdn.glitch.global/482bb855-3373-4ff9-b060-ca967b7022b9/strawberry.gltf?v=1670015413934"
+        >
+        </a-asset-item>
+        <a-asset-item
+          id="res-cadeira"
+          src="https://cdn.glitch.global/482bb855-3373-4ff9-b060-ca967b7022b9/chair.gltf?v=1669595780078"
+        >
+        </a-asset-item>
       </a-assets>
 
+      <!-- CURSOR -->
       <a-entity
         cursor="rayOrigin: mouse"
         raycaster="objects: .intersectable; useWorldCoordinates: true;"
       >
       </a-entity>
 
-      <!-- Quando o QRCode é escaneado -->
-      <a-marker type="barcode" value="17" emitevents="true" for_a_marker>
+      <!-- QRCODE 1 (Burguer) -->
+      <a-marker type="barcode" value="1" emitevents="true" for_a_marker>
+        <!-- TÍTULO -->
+        <a-box color="grey" scale="3.8 0.03 0.5" position="0.05 -0.3 -1">
+        </a-box>
         <a-text
           value="Qual o nome desse objeto em ingles?"
           rotation="270 0 0"
           position="-1.7 0 -1"
-          color="#d2c911"
+          color="#dbdb24"
         ></a-text>
 
-        <!-- <a-entity
-          gltf-model="#chair"
-          id="casa"
-          rotation="270 0 0"
-          position="0 0 0.5"
-          scale="1.2 1.2 1.2"
-          class="intersectable"
-        >
-        </a-entity> -->
-
+        <!-- MODELO 3D -->
         <a-entity
-          gltf-model="#burguer"
-          id="casa"
+          gltf-model="#res-burguer"
           rotation="270 0 0"
           position="0 0 0.5"
           scale="0.5 0.5 0.5"
@@ -76,9 +96,9 @@
         >
         </a-entity>
 
-        <!-- Opção 1 -->
-        <!-- heigh=largura depth=altura width=espessura -->
+        <!-- OPÇÃO 1 -->
         <a-box
+          id="qr1-box-opcao1"
           color="white"
           depth="0.7"
           height="1.2"
@@ -86,17 +106,28 @@
           rotation="0 0 270"
           position="-1.5 0 1.2"
         >
+          <!-- heigh=largura depth=altura width=espessura -->
           <a-entity
-            text="value: snack; color: #d2c911; align: center; text-shadow: -1px 0 black"
+            text="value: snack; color: #dbdb24; align: center; text-shadow: -1px 0 black"
             scale="6 6 6"
             rotation="0 270 90"
-            position="-0.08 0 0"
+            position="-0.12 0 0"
           ></a-entity>
         </a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7; depth: 3"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="-1.5 0.15 1.2"
+          rotation="270 0 0"
+          natureza="errado"
+          box_id="qr1-box-opcao1"
+        >
+        </a-entity>
 
-        <!-- Opção 2 -->
-        <!-- heigh=largura depth=altura width=espessura -->
+        <!-- OPÇÃO 2 -->
         <a-box
+          id="qr1-box-opcao2"
           color="white"
           depth="0.7"
           height="1.2"
@@ -104,17 +135,28 @@
           rotation="0 0 270"
           position="0 0 1.2"
         >
+          <!-- heigh=largura depth=altura width=espessura -->
           <a-entity
-            text="value: lunch; color: #d2c911; align: center;"
+            text="value: lunch; color: #dbdb24; align: center;"
             scale="6 6 6"
             rotation="0 270 90"
-            position="-0.08 0 0"
+            position="-0.12 0 0"
           ></a-entity
         ></a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7; depth: 3"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="0 0.15 1.2"
+          rotation="270 0 0"
+          natureza="errado"
+          box_id="qr1-box-opcao2"
+        >
+        </a-entity>
 
-        <!-- Opção 3 -->
-        <!-- heigh=largura depth=altura width=espessura -->
+        <!-- OPÇÃO 3 -->
         <a-box
+          id="qr1-box-opcao3"
           color="white"
           depth="0.7"
           height="1.2"
@@ -122,13 +164,464 @@
           rotation="0 0 270"
           position="1.5 0 1.2"
         >
+          <!-- heigh=largura depth=altura width=espessura -->
           <a-entity
-            text="value: burguer; color: #d2c911; align: center;"
+            text="value: burguer; color: #dbdb24; align: center;"
             scale="6 6 6"
             rotation="0 270 90"
-            position="-0.08 0 0"
+            position="-0.12 0 0"
           ></a-entity
         ></a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7; depth: 3"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="1.5 0.15 1.2"
+          rotation="270 0 0"
+          natureza="certo"
+          box_id="qr1-box-opcao3"
+        >
+        </a-entity>
+      </a-marker>
+
+      <!-- QRCODE 2 (Óculos de Sol) -->
+      <a-marker type="barcode" value="2" emitevents="true" for_a_marker>
+        <!-- TÍTULO -->
+        <a-box color="grey" scale="3.8 0.03 0.5" position="0.05 -0.3 -1">
+        </a-box>
+        <a-text
+          value="Qual o nome desse objeto em ingles?"
+          rotation="270 0 0"
+          position="-1.7 0 -1"
+          color="#dbdb24"
+        ></a-text>
+
+        <!-- MODELO 3D -->
+        <a-entity
+          gltf-model="#res-oculos-sol"
+          rotation="-90 0 0"
+          position="0 0 -0.5"
+          scale="0.7 0.7 0.7"
+          class="intersectable"
+        >
+        </a-entity>
+
+        <!-- OPÇÃO 1 -->
+        <a-box
+          id="qr2-box-opcao1"
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="-1.5 0 1.2"
+        >
+          <!-- heigh=largura depth=altura width=espessura -->
+          <a-entity
+            text="value: sunglasses; color: #dbdb24; align: center; text-shadow: -1px 0 black"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.12 0 0"
+          ></a-entity>
+        </a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="-1.5 0.15 1.2"
+          rotation="270 0 0"
+          natureza="certo"
+          box_id="qr2-box-opcao1"
+        >
+        </a-entity>
+
+        <!-- OPÇÃO 2 -->
+        <a-box
+          id="qr2-box-opcao2"
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="0 0 1.2"
+        >
+          <!-- heigh=largura depth=altura width=espessura -->
+          <a-entity
+            text="value: eyepatch; color: #dbdb24; align: center;"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.12 0 0"
+          ></a-entity
+        ></a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="0 0.15 1.2"
+          rotation="270 0 0"
+          natureza="errado"
+          box_id="qr2-box-opcao2"
+        >
+        </a-entity>
+
+        <!-- OPÇÃO 3 -->
+        <a-box
+          id="qr2-box-opcao3"
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="1.5 0 1.2"
+        >
+          <!-- heigh=largura depth=altura width=espessura -->
+          <a-entity
+            text="value: window; color: #dbdb24; align: center;"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.12 0 0"
+          ></a-entity
+        ></a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7; depth: 3"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="1.5 0.15 1.2"
+          rotation="270 0 0"
+          natureza="errado"
+          box_id="qr2-box-opcao3"
+        >
+        </a-entity>
+      </a-marker>
+
+      <!-- QRCODE 3 (Privada) -->
+      <a-marker type="barcode" value="3" emitevents="true" for_a_marker>
+        <!-- TÍTULO -->
+        <a-box color="grey" scale="3.8 0.03 0.5" position="0.05 -0.3 -1">
+        </a-box>
+        <a-text
+          value="Qual o nome desse objeto em ingles?"
+          rotation="270 0 0"
+          position="-1.7 0 -1"
+          color="#dbdb24"
+        ></a-text>
+
+        <!-- MODELO 3D -->
+        <a-entity
+          gltf-model="#res-privada"
+          rotation="270 0 0"
+          position="0 -0.8 0.7"
+          scale="1.8 1.8 1.8"
+          class="intersectable"
+        >
+        </a-entity>
+
+        <!-- OPÇÃO 1 -->
+        <a-box
+          id="qr3-box-opcao1"
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="-1.5 0 1.2"
+        >
+          <!-- heigh=largura depth=altura width=espessura -->
+          <a-entity
+            text="value: private; color: #dbdb24; align: center; text-shadow: -1px 0 black"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.12 0 0"
+          ></a-entity>
+        </a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="-1.5 0.15 1.2"
+          rotation="270 0 0"
+          natureza="errado"
+          box_id="qr3-box-opcao1"
+        >
+        </a-entity>
+
+        <!-- OPÇÃO 2 -->
+        <a-box
+          id="qr3-box-opcao2"
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="0 0 1.2"
+        >
+          <!-- heigh=largura depth=altura width=espessura -->
+          <a-entity
+            text="value: bathroom; color: #dbdb24; align: center;"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.12 0 0"
+          ></a-entity
+        ></a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="0 0.15 1.2"
+          rotation="270 0 0"
+          natureza="errado"
+          box_id="qr3-box-opcao2"
+        >
+        </a-entity>
+
+        <!-- OPÇÃO 3 -->
+        <a-box
+          id="qr3-box-opcao3"
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="1.5 0 1.2"
+        >
+          <!-- heigh=largura depth=altura width=espessura -->
+          <a-entity
+            text="value: toilet; color: #dbdb24; align: center;"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.12 0 0"
+          ></a-entity
+        ></a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7; depth: 3"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="1.5 0.15 1.2"
+          rotation="270 0 0"
+          natureza="certo"
+          box_id="qr3-box-opcao3"
+        >
+        </a-entity>
+      </a-marker>
+
+      <!-- QRCODE 4 (Morango) -->
+      <a-marker type="barcode" value="4" emitevents="true" for_a_marker>
+        <!-- TÍTULO -->
+        <a-box color="grey" scale="3.8 0.03 0.5" position="0.05 -0.3 -1">
+        </a-box>
+        <a-text
+          value="Qual o nome desse objeto em ingles?"
+          rotation="270 0 0"
+          position="-1.7 0 -1"
+          color="#dbdb24"
+        ></a-text>
+
+        <!-- MODELO 3D -->
+        <a-entity
+          gltf-model="#res-morango"
+          rotation="270 0 0"
+          position="0 0 0.7"
+          scale="0.2 0.2 0.2"
+          class="intersectable"
+        >
+        </a-entity>
+
+        <!-- OPÇÃO 1 -->
+        <a-box
+          id="qr4-box-opcao1"
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="-1.5 0 1.2"
+        >
+          <!-- heigh=largura depth=altura width=espessura -->
+          <a-entity
+            text="value: redberry; color: #dbdb24; align: center; text-shadow: -1px 0 black"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.12 0 0"
+          ></a-entity>
+        </a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="-1.5 0.15 1.2"
+          rotation="270 0 0"
+          natureza="errado"
+          box_id="qr4-box-opcao1"
+        >
+        </a-entity>
+
+        <!-- OPÇÃO 2 -->
+        <a-box
+          id="qr4-box-opcao2"
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="0 0 1.2"
+        >
+          <!-- heigh=largura depth=altura width=espessura -->
+          <a-entity
+            text="value: strawberry; color: #dbdb24; align: center;"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.12 0 0"
+          ></a-entity
+        ></a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="0 0.15 1.2"
+          rotation="270 0 0"
+          natureza="certo"
+          box_id="qr4-box-opcao2"
+        >
+        </a-entity>
+
+        <!-- OPÇÃO 3 -->
+        <a-box
+          id="qr4-box-opcao3"
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="1.5 0 1.2"
+        >
+          <!-- heigh=largura depth=altura width=espessura -->
+          <a-entity
+            text="value: morang; color: #dbdb24; align: center;"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.12 0 0"
+          ></a-entity
+        ></a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7; depth: 3"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="1.5 0.15 1.2"
+          rotation="270 0 0"
+          natureza="errado"
+          box_id="qr4-box-opcao3"
+        >
+        </a-entity>
+      </a-marker>
+
+      <!-- QRCODE 5 (Cadeira) -->
+      <a-marker type="barcode" value="5" emitevents="true" for_a_marker>
+        <!-- TÍTULO -->
+        <a-box color="grey" scale="3.8 0.03 0.5" position="0.05 -0.3 -1">
+        </a-box>
+        <a-text
+          value="Qual o nome desse objeto em ingles?"
+          rotation="270 0 0"
+          position="-1.7 0 -1"
+          color="#dbdb24"
+        ></a-text>
+
+        <!-- MODELO 3D -->
+        <a-entity
+          gltf-model="#res-cadeira"
+          rotation="270 0 0"
+          position="0 -0.8 2"
+          scale="0.2 0.2 0.2"
+          class="intersectable"
+        >
+        </a-entity>
+
+        <!-- OPÇÃO 1 -->
+        <a-box
+          id="qr5-box-opcao1"
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="-1.5 0 1.2"
+        >
+          <!-- heigh=largura depth=altura width=espessura -->
+          <a-entity
+            text="value: bank; color: #dbdb24; align: center; text-shadow: -1px 0 black"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.12 0 0"
+          ></a-entity>
+        </a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="-1.5 0.15 1.2"
+          rotation="270 0 0"
+          natureza="errado"
+          box_id="qr5-box-opcao1"
+        >
+        </a-entity>
+
+        <!-- OPÇÃO 2 -->
+        <a-box
+          id="qr5-box-opcao2"
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="0 0 1.2"
+        >
+          <!-- heigh=largura depth=altura width=espessura -->
+          <a-entity
+            text="value: sit; color: #dbdb24; align: center;"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.12 0 0"
+          ></a-entity
+        ></a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="0 0.15 1.2"
+          rotation="270 0 0"
+          natureza="errado"
+          box_id="qr5-box-opcao2"
+        >
+        </a-entity>
+
+        <!-- OPÇÃO 3 -->
+        <a-box
+          id="qr5-box-opcao3"
+          color="white"
+          depth="0.7"
+          height="1.2"
+          width="0.08"
+          rotation="0 0 270"
+          position="1.5 0 1.2"
+        >
+          <!-- heigh=largura depth=altura width=espessura -->
+          <a-entity
+            text="value: chair; color: #dbdb24; align: center;"
+            scale="6 6 6"
+            rotation="0 270 90"
+            position="-0.12 0 0"
+          ></a-entity
+        ></a-box>
+        <a-entity
+          class="btn-opcao"
+          geometry="primitive: plane; width: 1.2; height: 0.7; depth: 3"
+          material="color: yellow; opacity: 0.0; transparent: true"
+          position="1.5 0.15 1.2"
+          rotation="270 0 0"
+          natureza="certo"
+          box_id="qr5-box-opcao3"
+        >
+        </a-entity>
       </a-marker>
 
       <a-entity camera> </a-entity>
