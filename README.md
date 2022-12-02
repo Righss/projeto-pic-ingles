@@ -6,12 +6,12 @@ Esse projeto tem como objetivo ensinar a língua inglesa de uma forma divertida 
 
 - Felipe Brochini - RA 202210217
 - Lucas Righetto Correa - RA 202210328
-- Henrique Christofoletti Ribeiro - RA 202210271 
+- Henrique Christofoletti Ribeiro - RA 202210271
 - Vinícius Pereira Barbosa - RA 202210254
 
 ## Executando na Navegador
 
-Para executar esse projeto pelO navegor, acesse o site https://ingles-for-you.glitch.me, permita o acesso à camera e então centralize na tela os QR codes que estão na pasta "qrs". 
+Para executar esse projeto pelo navegor, acesse o site https://ingles-for-you.glitch.me, permita o acesso à camera e então centralize na tela os QR codes que estão na pasta "qrs".
 
 Para cada um deles, um objeto diferente aparecerá com três alternativas de resposta. Para selecionar a resposta, é necessário touch. Portanto, recomendamos fortemente que você acesse esse site pelo celular. Caso a resposta seja certa, ela ficará verde. Caso contrário, vermelha.
 
