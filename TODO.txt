@@ -1,4 +1,13 @@
 TAREFAS (ordem de prioridade)
+- Models para usar
+- Organizar melhor o código
+- Embelezar opções
+- Embelezar pergunta
+- Criar os demais desafios
+- Criar o restante dos QRCodes e salvar no repositório
+- Subir todos os assets para o cdn do glitch
+- Finalizar o README.txt
+
 - Implementar funcionalidade do touch nas três opções, que irão ficar verde quando forem certas e vermelhas quando erradas
 - Decorar retângulo de opções (cor um pouco mais cinza com borda mais escura? "retângulo maior em volta")
 - Decorar texto das opções (cor mais adequada?)
